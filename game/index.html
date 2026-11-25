@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dapur Kilat — Warung Rush Kitchen</title>
+<link rel="icon" href="data:,">
+<style>
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: #2b2118;
+    min-height: 100%;
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+  canvas {
+    display: block;
+    width: min(1280px, 96vw);
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.55);
+    background: #f7ead2;
+    cursor: pointer;
+  }
+  p.help {
+    margin: 0;
+    color: #f7ead2;
+    font-size: 14px;
+    text-align: center;
+    max-width: 1280px;
+  }
+  p.help b { color: #ffd94d; }
+  /* Bare mode (?bare=1): the canvas fills the viewport exactly, so a
+     headless screenshot is precisely the game at 1280x720. */
+  body.bare { padding: 0; gap: 0; }
+  body.bare p.help { display: none; }
+  body.bare canvas { width: 100vw; height: 100vh; border-radius: 0; box-shadow: none; }
+</style>
+</head>
+<body>
+<canvas id="game" width="1280" height="720"></canvas>
+<p class="help"><b>Dapur Kilat</b> — ambil bahan, olah di stasiun, susun di piring, sajikan ke pelanggan.
+Klik / Spasi untuk mulai &nbsp;•&nbsp; tombol 1–7 mengambil bahan &nbsp;•&nbsp; M: suara &nbsp;•&nbsp; R: main lagi</p>
+<script type="module" src="./src/main.js"></script>
+</body>
+</html>
