@@ -7,7 +7,7 @@
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 // In the grader MAKEFUN_OUTPUT_DIR is unset and /output is used.
 
-import { cpSync, existsSync, mkdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-game.ts';
@@ -22,8 +22,13 @@ if (!existsSync(gameDir)) {
 }
 
 // Start from a clean output directory so stale files never leak into an entry.
-rmSync(outDir, { recursive: true, force: true });
+// Clear only the CONTENTS of outDir, never outDir itself: in the grader
+// outDir is a mount point (/output), and removing a mount point fails with
+// EBUSY ("Device or resource busy"), which aborted the run with exit 1.
 mkdirSync(outDir, { recursive: true });
+for (const entry of readdirSync(outDir)) {
+  rmSync(join(outDir, entry), { recursive: true, force: true });
+}
 cpSync(gameDir, join(outDir, 'game'), { recursive: true });
 
 const outShots = join(outDir, 'screenshots');
